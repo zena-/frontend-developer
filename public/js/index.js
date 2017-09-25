@@ -71,7 +71,9 @@ var job = {
 	]
 }
 
-function EmploymentType() { return enumerate("Permanent", "Temporary", "Project"); }
+function EmploymentType() { 
+	return enumerate("Permanent", "Temporary", "Project"); 
+}
 function ExperienceLevels() { return enumerate("Junior", "Seasoned", "Lead", "GrayBeard"); }
 function CompanySize() { return enumerate("LessThanTen", "TenToTwenty", "TwentyToFifty", "FiftyToTwoHundred", "MoreThanTwoHundred"); }
 function VersionControlSystem() { return enumerate("NotYetChosen", "Git", "BitBucket"); }
@@ -92,3 +94,69 @@ function PTO() { return enumerate("Accrued", "Unlimited") }
 
 // https://github.com/RougeWare/Micro-JS-Enum/tree/master/lib
 function enumerate() { v=arguments;s={all:[],keys:v};for(i=v.length;i--;)s[v[i]]=s.all[i]=v[i];return s };
+
+
+
+
+var JSONjob = JSON.stringify(job);
+// console.log(JSONjob);
+var obj = JSON.parse(JSONjob);
+var objAgain = JSON.parse(JSONjob);
+$(function(){
+	document.getElementById("first").innerHTML = //JSONjob;
+		"Applying for " + obj.headline + " position" + " <br> " + 
+		obj.other + ".";
+
+
+
+		var array = ["<ul>"];
+		function printList(items) {
+		    switch ($.type(items)) {
+		        case "object":
+		            getChildren(items);
+		            break;
+		        case "string":
+		            array.push("<li>" + items + "</li>");
+		            //console.log(items);
+		            break;
+		        case "array":
+		            printArray(items);
+		            break;
+		       
+		    }
+		    
+		}
+
+		function getChildren(parent) {
+		    for (var child in parent) {
+		        //console.log(child);
+		         array.push("<li>" + child + "<ul>");
+		        printList(parent[child]);
+		        array.push("</ul></li>");
+		    }
+		}
+		function printArray(myArray){
+		    for(var i = 0; i < myArray.length; i++){
+		        //console.log(myArray[i]);
+		         array.push("<li>" + myArray[i] + "</li>");
+		        }
+		}
+		printList(job);
+		array.push("<ul>");
+		$("#sec").html(array.join(""));
+
+
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
